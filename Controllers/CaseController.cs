@@ -27,5 +27,16 @@ namespace DetectiveCaseFileSystem.Controllers
             }
             return View(newCase);
         }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var foundCase = _cases.FirstOrDefault(c => c.Id == id);
+            if (foundCase ==  null)
+            {
+                return NotFound();
+            }
+            return View(foundCase);
+        }
     }
 }
