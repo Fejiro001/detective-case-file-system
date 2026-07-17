@@ -16,5 +16,16 @@ namespace DetectiveCaseFileSystem.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult Create(Case newCase)
+        {
+            if (ModelState.IsValid)
+            {
+                newCase.Id = _nextId++;
+                _cases.Add(newCase);
+                return RedirectToAction("Index");
+            }
+            return View(newCase);
+        }
     }
 }
