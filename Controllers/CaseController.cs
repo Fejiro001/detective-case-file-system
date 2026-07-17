@@ -11,5 +11,10 @@ namespace DetectiveCaseFileSystem.Controllers
         {
             return View(_cases);
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
