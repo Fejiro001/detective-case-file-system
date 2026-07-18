@@ -2,7 +2,7 @@
 {
     public class SuspectViewModel
     {
-        // Suspect
+        // All Suspect info
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime? DateOfBirth { get; set; }
@@ -13,16 +13,10 @@
         public RoleInCase RoleInCase { get; set; }
         public string? PhotoUrl { get; set; } = "https://api.dicebear.com/8.x/pixel-art/svg?seed=Unknown";
         public string? PhysicalDescription { get; set; }
-        // Case
+        
+        // Only essential Case info to display and for linking
         public int CaseId { get; set; }
         public string CaseNumber { get; set; }
-        public string Title { get; set; }
-        public string? Description { get; set; }
-        public CrimeType CrimeType { get; set; }
-        public PriorityLevel PriorityLevel { get; set; }
-        public string Location { get; set; }
-        public Status Status { get; set; }
-        public DateTime? TimeOfCrime { get; set; }
-        public string Investigator { get; set; }
+        public string CaseTitle { get; set; }
     }
 }
