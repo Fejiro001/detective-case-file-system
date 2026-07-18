@@ -5,11 +5,11 @@ namespace DetectiveCaseFileSystem.Controllers
 {
     public class CaseController : Controller
     {
-        private static List<Case> _cases = new List<Case>();
+        public static List<Case> Cases = new List<Case>();
         private static int _nextId = 1;
         public IActionResult Index()
         {
-            return View(_cases);
+            return View(Cases);
         }
 
         [HttpGet]
@@ -23,7 +23,7 @@ namespace DetectiveCaseFileSystem.Controllers
             if (ModelState.IsValid)
             {
                 newCase.Id = _nextId++;
-                _cases.Add(newCase);
+                Cases.Add(newCase);
                 return RedirectToAction("Index");
             }
             return View(newCase);
@@ -32,7 +32,7 @@ namespace DetectiveCaseFileSystem.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var foundCase = _cases.FirstOrDefault(c => c.Id == id);
+            var foundCase = Cases.FirstOrDefault(c => c.Id == id);
             if (foundCase == null) return NotFound();
             return View(foundCase);
         }
@@ -43,7 +43,7 @@ namespace DetectiveCaseFileSystem.Controllers
             {
                 return View(updatedCase);
             }
-            var foundCase = _cases.FirstOrDefault(c => c.Id == updatedCase.Id);
+            var foundCase = Cases.FirstOrDefault(c => c.Id == updatedCase.Id);
             if (foundCase == null) return NotFound();
 
             foundCase.CaseNumber = updatedCase.CaseNumber;
@@ -61,7 +61,7 @@ namespace DetectiveCaseFileSystem.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var foundCase = _cases.FirstOrDefault(c => c.Id == id);
+            var foundCase = Cases.FirstOrDefault(c => c.Id == id);
             if (foundCase == null) return NotFound();
             return View(foundCase);
         }
@@ -70,10 +70,10 @@ namespace DetectiveCaseFileSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            var foundCase = _cases.FirstOrDefault(c => c.Id == id);
+            var foundCase = Cases.FirstOrDefault(c => c.Id == id);
             if (foundCase != null)
             {
-                _cases.Remove(foundCase);
+                Cases.Remove(foundCase);
             }
             return RedirectToAction("Index");
         }

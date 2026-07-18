@@ -1,16 +1,15 @@
 ﻿using DetectiveCaseFileSystem.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Policy;
 
 namespace DetectiveCaseFileSystem.Controllers
 {
     public class SuspectController : Controller
     {
-        private static List<Suspect> _suspects = new List<Suspect>();
+        public static List<Suspect> Suspects = new List<Suspect>();
         private static int _nextId = 1;
         public IActionResult Index()
         {
-            return View(_suspects);
+            return View(Suspects);
         }
 
         [HttpGet]
@@ -24,7 +23,7 @@ namespace DetectiveCaseFileSystem.Controllers
             if (ModelState.IsValid)
             {
                 suspect.Id = _nextId++;
-                _suspects.Add(suspect);
+                Suspects.Add(suspect);
                 return RedirectToAction("Index");
             }
             return View(suspect);
@@ -33,7 +32,7 @@ namespace DetectiveCaseFileSystem.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var suspect = _suspects.FirstOrDefault(s => s.Id == id);
+            var suspect = Suspects.FirstOrDefault(s => s.Id == id);
             if (suspect == null) return NotFound();
             return View(suspect);
         }
@@ -44,7 +43,7 @@ namespace DetectiveCaseFileSystem.Controllers
             {
                 return View(updatedSuspect);
             }
-            var suspect = _suspects.FirstOrDefault(s => s.Id == updatedSuspect.Id);
+            var suspect = Suspects.FirstOrDefault(s => s.Id == updatedSuspect.Id);
             if (suspect == null) return NotFound();
 
             suspect.Name = updatedSuspect.Name;
@@ -64,10 +63,10 @@ namespace DetectiveCaseFileSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            var suspect = _suspects.FirstOrDefault(s => s.Id == id);
+            var suspect = Suspects.FirstOrDefault(s => s.Id == id);
             if (suspect != null)
             {
-                _suspects.Remove(suspect);
+                Suspects.Remove(suspect);
             }
             return RedirectToAction("Index");
         }
@@ -76,8 +75,25 @@ namespace DetectiveCaseFileSystem.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var suspect = _suspects.FirstOrDefault(s => s.Id == id);
+            Suspect suspect = Suspects.FirstOrDefault(s => s.Id == id);
             if (suspect == null) return NotFound();
+            Case foundCase = CaseController.Cases.FirstOrDefault(c => c.Id == suspect.CaseId);
+            var vm = new SuspectViewModel
+            {
+                Id = suspect.Id,
+                Name = suspect.Name,
+                DateOfBirth = suspect.DateOfBirth,
+                KnownAssociates = suspect.KnownAssociates,
+                RiskLevel = suspect.RiskLevel,
+                LastKnownLocation = suspect.LastKnownLocation,
+                Aliases = suspect.Aliases,
+                RoleInCase = suspect.RoleInCase,
+                PhotoUrl = suspect.PhotoUrl,
+                PhysicalDescription = suspect.PhysicalDescription,
+                CaseId = foundCase.Id,
+                CaseNumber = foundCase.CaseNumber,
+                CaseTitle = foundCase.Title
+            };
             return View(suspect);
         }
     }
