@@ -57,5 +57,25 @@ namespace DetectiveCaseFileSystem.Controllers
             foundCase.Investigator = updatedCase.Investigator;
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var foundCase = _cases.FirstOrDefault(c => c.Id == id);
+            if (foundCase == null) return NotFound();
+            return View(foundCase);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            var foundCase = _cases.FirstOrDefault(c => c.Id == id);
+            if (foundCase != null)
+            {
+                _cases.Remove(foundCase);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
