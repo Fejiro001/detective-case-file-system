@@ -1,5 +1,58 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<DetectiveCaseFileSystem.Models.Suspect>
+
 @{
+    ViewData["Title"] = "All Suspects";
 }
+
+<section class="container mt-4">
+    <div class="mb-4 d-flex justify-content-between align-items-center">
+        <h2>Suspect Lineup</h2>
+        <a href="/Suspects/Create" class="btn btn-dark">Register Suspect</a>
+    </div>
+
+    <div class="row">
+        @foreach (Suspect suspect in Model)
+        {
+            <article class="col-md-3 col-sm-6 mb-4 d-flex">
+                <div class="card w-100 shadow-sm border-dark">
+
+                    <figure class="m-0 position-relative">
+                        <img src="@suspect.PhotoUrl"
+                             class="card-img-top border-bottom bg-light"
+                             alt="Mugshot of @suspect.Name"
+                             style="height: 250px; object-fit: cover;" />
+
+                        <!-- Risk Level Badge positioned over the photo -->
+                        <figcaption class="position-absolute top-0 start-0 m-2">
+                            <span class="badge shadow">Risk: @suspect.RiskLevel</span>
+                        </figcaption>
+                    </figure>
+
+                    <div class="card-body flex-grow-1 text-center">
+                        <header>
+                            <h3 class="h5 fw-bold mb-0">@suspect.Name</h3>
+                            <p class="text-muted small mb-2">
+                                AKA: @suspect.Aliases
+                            </p>
+                        </header>
+
+                        <ul class="list-unstyled small mb-0 text-start border-top pt-2 mt-2">
+                            <li class="text-truncate">
+                                <strong>Last Seen:</strong> @suspect.LastKnownLocation
+                            </li>
+                            <li>
+                                <strong>Role:</strong> @suspect.RoleInCase
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="card-footer bg-dark border-top-0 p-0">
+                        <a href="/Suspects/Details/@suspect.Id" class="btn btn-dark w-100 rounded-0">
+                            View File
+                        </a>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+</section>
