@@ -10,7 +10,7 @@
         public string LocationFound { get; set; }
         public string? ImageUrl { get; set; }
 
-        // Just important Case info
+        // Just important Case info to display
         public int CaseId { get; set; }
         public string CaseNumber { get; set; }
 

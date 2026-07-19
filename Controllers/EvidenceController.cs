@@ -72,8 +72,23 @@ namespace DetectiveCaseFileSystem.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var evidence = _evidences.FirstOrDefault(e => e.Id == id);
+            Evidence evidence = _evidences.FirstOrDefault(e => e.Id == id);
             if (evidence == null) return NotFound();
+            Case foundCase = CaseController.Cases.FirstOrDefault(c => c.Id == evidence.CaseId);
+            Suspect suspect = SuspectController.Suspects.FirstOrDefault(c => c.Id == evidence.SuspectId);
+            var vm = new EvidenceViewModel
+            {
+                Id = evidence.Id,
+                Type = evidence.Type,
+                Description = evidence.Description,
+                DateCollected = evidence.DateCollected,
+                LocationFound = evidence.LocationFound,
+                ImageUrl = evidence.ImageUrl,
+                CaseId = foundCase.Id,
+                CaseNumber = foundCase.CaseNumber,
+                SuspectId = suspect.Id,
+                SuspectName = suspect.Name
+            };
             return View(evidence);
         }
     }
