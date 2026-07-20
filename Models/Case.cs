@@ -33,6 +33,7 @@ namespace DetectiveCaseFileSystem.Models
         public DateTime? TimeOfCrime { get; set; }
 
         [Required(ErrorMessage = "Name of investigator is required.")]
+        [Display(Name = "Investigator Name")]
         public string Investigator { get; set; }
     }
 }

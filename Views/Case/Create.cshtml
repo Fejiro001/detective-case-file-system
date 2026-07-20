@@ -1,5 +1,85 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Case
+
 @{
+    ViewData["Title"] = "Case Creation";
 }
+
+<section class="container mt-4">
+    <div class="mb-4">
+        <h2>Open New Investigation</h2>
+    </div>
+
+    <div class="row">
+        <form asp-action="Create" method="post" class="card shadow-sm p-4 border-dark">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="CaseNumber" class="form-label fw-bold"></label>
+                    <input asp-for="CaseNumber" class="form-control" placeholder="e.g. CASE-2026-003" />
+                    <span asp-validation-for="CaseNumber" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Title" class="form-label fw-bold"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label fw-bold"></label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Location" class="form-label fw-bold"></label>
+                    <input asp-for="Location" class="form-control" />
+                    <span asp-validation-for="Location" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="TimeOfCrime" class="form-label fw-bold"></label>
+                    <input asp-for="TimeOfCrime" type="datetime-local" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row bg-light p-2 rounded mt-2 mb-4">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Investigator" class="form-label fw-bold"></label>
+                    <input asp-for="Investigator" class="form-control" />
+                    <span asp-validation-for="Investigator" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="CrimeType" class="form-label fw-bold"></label>
+                    <select asp-for="CrimeType" class="form-select" asp-items="Html.GetEnumSelectList<CrimeType>()">
+                        <option value="">-- Select Crime Type --</option>
+                    </select>
+                    <span asp-validation-for="CrimeType" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PriorityLevel" class="form-label fw-bold"></label>
+                    <select asp-for="PriorityLevel" class="form-select" asp-items="Html.GetEnumSelectList<PriorityLevel>()">
+                        <option value="">-- Select Priority --</option>
+                    </select>
+                    <span asp-validation-for="PriorityLevel" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Status" class="form-label fw-bold"></label>
+                    <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<Status>()">
+                        <option value="">-- Select Status --</option>
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-outline-dark">&larr; Back to List</a>
+                <button type="submit" class="btn btn-primary px-4">Open Case</button>
+            </div>
+        </form>
+    </div>
+</section>
