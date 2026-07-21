@@ -1,3 +1,14 @@
+/* wwwroot/css/site.css */
+:root {
+    --bg-dark: #121212;
+    --bg-card: #1e1e1e;
+    --text-primary: #f8f9fa;
+    --text-muted: #a0a0a0;
+    --accent-warning: #ffc107;
+    --accent-danger: #dc3545;
+    --font-mono: 'Courier New', Courier, monospace;
+}
+
 html {
   font-size: 14px;
 }
