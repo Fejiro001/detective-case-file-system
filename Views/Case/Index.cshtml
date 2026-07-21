@@ -4,42 +4,40 @@
     ViewData["Title"] = "All Cases";
 }
 
-<section class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Active Investigations</h2>
-        <a asp-action="Create" class="btn btn-outline-primary">Open New Case</a>
-    </div>
+<section class="case-index-container">
+    <header class="index-header">
+        <div class="header-titles">
+            <span class="classification-tag">CLASSIFIED // ARCHIVE</span>
+            <h2 class="index-title">Active Investigations</h2>
+        </div>
+        <a asp-action="Create" class="btn-primary">Open New Case</a>
+    </header>
 
-    <div class="row">
+    <div class="case-grid">
         @foreach (Case caseItem in Model)
         {
-            <article class="col-md-4 mb-4 d-flex">
-                <div class="card w-100 border-0 shadow border-start border-5 border-warning">
-                    <!-- Card header -->
-                    <div class="card-header bg-dark text-warning font-monospace fw-bold d-flex justify-content-between align-items-center">
-                        <span class="text-uppercase">#@caseItem.CaseNumber</span>
-                        <span>Opened: @caseItem.TimeOfCrime?.ToString("MMM dd, yyyy")</span>
-                    </div>
+            <article class="case-card">
+                <header class="card-top-bar">
+                    <span class="case-id font-mono">#@caseItem.CaseNumber</span>
+                    <span class="case-date font-mono">Opened: @(caseItem.TimeOfCrime?.ToString("MMM dd, yyyy") ?? "UNKNOWN")</span>
+                </header>
 
-                    <!-- Card main content -->
-                    <div class="card-body">
-                        <h3 class="card-title h5 fw-bold mb-3">@caseItem.Title</h3>
-                        <p class="card-text text-secondary text-truncate" style="height: 3rem; overflow: hidden;">@caseItem.Description</p>
+                <div class="card-content">
+                    <h3 class="card-title">@caseItem.Title</h3>
+                    <p class="card-desc">@caseItem.Description</p>
 
-                        <div class="d-flex gap-2 mt-3">
-                            <span class="badge bg-dark text-warning">Priority: @caseItem.PriorityLevel</span>
-                            <span class="badge bg-light text-dark border">Status: @caseItem.Status</span>
-                        </div>
-                    </div>
-
-                    <!-- Card footer -->
-                    <div class="card-footer bg-white border-top-0 pb-3 d-flex gap-2 d-flex justify-content-between align-items-center">
-                        <a href="/Cases/Details/@caseItem.Id" class="btn btn-outline-dark">Access File &rarr;</a>
-                        <form asp-action="Delete" asp-route-id="@caseItem.Id" method="post" onsubmit="return confirm('Permanently remove this case file?');">
-                            <button type="submit" class="btn btn-danger" title="Delete Case File">Delete</button>
-                        </form>
+                    <div class="badge-group">
+                        <span class="badge priority-badge">Priority: @caseItem.PriorityLevel</span>
+                        <span class="badge status-badge">Status: @caseItem.Status</span>
                     </div>
                 </div>
+
+                <footer class="card-actions">
+                    <a asp-action="Details" asp-route-id="@caseItem.Id" class="btn-secondary">Access File &rarr;</a>
+                    <form asp-action="Delete" asp-route-id="@caseItem.Id" method="post" class="delete-form" onsubmit="return confirm('Permanently remove this case file?');">
+                        <button type="submit" class="btn-danger" title="Delete Case File">Delete</button>
+                    </form>
+                </footer>
             </article>
         }
     </div>
