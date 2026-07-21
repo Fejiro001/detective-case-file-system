@@ -1,85 +1,104 @@
 ﻿@model Case
 
 @{
-    ViewData["Title"] = "Case Creation";
+    ViewData["Title"] = "Add Case";
 }
 
-<section class="container mt-4">
-    <div class="mb-4">
-        <h2>Open New Investigation</h2>
-    </div>
+<section class="case-form-container">
+    <header class="form-header">
+        <span class="classification-tag">CLASSIFIED // DOSSIER CREATION</span>
+        <h2 class="form-title">Open New Investigation</h2>
+    </header>
 
-    <div class="row">
-        <form asp-action="Create" method="post" class="card shadow-sm p-4 border-dark">
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label asp-for="CaseNumber" class="form-label fw-bold"></label>
-                    <input asp-for="CaseNumber" class="form-control" placeholder="e.g. CASE-2026-003" />
-                    <span asp-validation-for="CaseNumber" class="text-danger small"></span>
+    <form asp-action="Create" method="post" class="case-form">
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+        <!-- Section 1: Identification -->
+        <fieldset class="form-section">
+            <legend class="section-title">Case Identification</legend>
+            <div class="form-grid dual-column">
+                <div class="form-group">
+                    <label asp-for="CaseNumber" class="form-label"></label>
+                    <input asp-for="CaseNumber" class="form-control font-mono" placeholder="e.g. CASE-2026-003" />
+                    <span asp-validation-for="CaseNumber" class="validation-message"></span>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label asp-for="Title" class="form-label fw-bold"></label>
-                    <input asp-for="Title" class="form-control" />
-                    <span asp-validation-for="Title" class="text-danger small"></span>
-                </div>
-            </div>
-
-            <!-- Description -->
-            <div class="mb-3">
-                <label asp-for="Description" class="form-label fw-bold"></label>
-                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label asp-for="Location" class="form-label fw-bold"></label>
-                    <input asp-for="Location" class="form-control" />
-                    <span asp-validation-for="Location" class="text-danger small"></span>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label asp-for="TimeOfCrime" class="form-label fw-bold"></label>
-                    <input asp-for="TimeOfCrime" type="datetime-local" class="form-control" />
+                <div class="form-group">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input asp-for="Title" class="form-control" placeholder="Enter incident title..." />
+                    <span asp-validation-for="Title" class="validation-message"></span>
                 </div>
             </div>
 
-            <div class="row bg-light p-2 rounded mt-2 mb-4">
-                <div class="col-md-6 mb-3">
-                    <label asp-for="Investigator" class="form-label fw-bold"></label>
-                    <input asp-for="Investigator" class="form-control" />
-                    <span asp-validation-for="Investigator" class="text-danger small"></span>
+            <div class="form-group full-width">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Provide detailed incident summary..."></textarea>
+                <span asp-validation-for="Description" class="validation-message"></span>
+            </div>
+        </fieldset>
+
+        <!-- Section 2: Incident Parameters -->
+        <fieldset class="form-section">
+            <legend class="section-title">Incident Parameters</legend>
+            <div class="form-grid dual-column">
+                <div class="form-group">
+                    <label asp-for="Location" class="form-label"></label>
+                    <input asp-for="Location" class="form-control" placeholder="Crime scene location..." />
+                    <span asp-validation-for="Location" class="validation-message"></span>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label asp-for="CrimeType" class="form-label fw-bold"></label>
+                <div class="form-group">
+                    <label asp-for="TimeOfCrime" class="form-label"></label>
+                    <input asp-for="TimeOfCrime" type="datetime-local" class="form-control font-mono" />
+                    <span asp-validation-for="TimeOfCrime" class="validation-message"></span>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Section 3: System Classification & Assignment -->
+        <fieldset class="form-section system-meta-group">
+            <legend class="section-title">System Classification & Assignment</legend>
+            <div class="form-grid dual-column">
+                <div class="form-group">
+                    <label asp-for="Investigator" class="form-label"></label>
+                    <input asp-for="Investigator" class="form-control" placeholder="Lead investigator name..." />
+                    <span asp-validation-for="Investigator" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CrimeType" class="form-label"></label>
                     <select asp-for="CrimeType" class="form-select" asp-items="Html.GetEnumSelectList<CrimeType>()">
                         <option value="">-- Select Crime Type --</option>
                     </select>
-                    <span asp-validation-for="CrimeType" class="text-danger small"></span>
+                    <span asp-validation-for="CrimeType" class="validation-message"></span>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label asp-for="PriorityLevel" class="form-label fw-bold"></label>
+                <div class="form-group">
+                    <label asp-for="PriorityLevel" class="form-label"></label>
                     <select asp-for="PriorityLevel" class="form-select" asp-items="Html.GetEnumSelectList<PriorityLevel>()">
                         <option value="">-- Select Priority --</option>
                     </select>
-                    <span asp-validation-for="PriorityLevel" class="text-danger small"></span>
+                    <span asp-validation-for="PriorityLevel" class="validation-message"></span>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label asp-for="Status" class="form-label fw-bold"></label>
+                <div class="form-group">
+                    <label asp-for="Status" class="form-label"></label>
                     <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<Status>()">
                         <option value="">-- Select Status --</option>
                     </select>
-                    <span asp-validation-for="Status" class="text-danger small"></span>
+                    <span asp-validation-for="Status" class="validation-message"></span>
                 </div>
             </div>
+        </fieldset>
 
-            <div class="d-flex justify-content-between">
-                <a asp-action="Index" class="btn btn-outline-dark">&larr; Back to List</a>
-                <button type="submit" class="btn btn-primary px-4">Open Case</button>
-            </div>
-        </form>
-    </div>
+        <!-- Form Actions -->
+        <div class="form-actions">
+            <a asp-action="Index" class="btn-secondary">&larr; Back to Archives</a>
+            <button type="submit" class="btn-primary">Open Case</button>
+        </div>
+    </form>
 </section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
