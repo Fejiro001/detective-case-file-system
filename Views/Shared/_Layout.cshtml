@@ -22,9 +22,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
                         <!-- Cases Dropdown -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="caseDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -34,6 +31,29 @@
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Case" asp-action="Index">View All</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Case" asp-action="Create">Add New</a></li>
                             </ul>
+                        </li>
+                        <!-- Evidence Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="evidenceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Evidence
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="evidenceDropdown">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Evidence" asp-action="Index">View All</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Evidence" asp-action="Create">Add New</a></li>
+                            </ul>
+                        </li>
+                        <!-- Suspects Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="suspectDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Suspects
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="suspectDropdown">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Suspect" asp-action="Index">View All</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Suspect" asp-action="Create">Add New</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>
