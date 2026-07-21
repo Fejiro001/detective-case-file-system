@@ -1,5 +1,73 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Evidence
+
 @{
+    ViewData["Title"] = "Add Evidence";
+}
+
+<section class="evidence-create-container">
+    <header class="evidence-header">
+        <h2 class="evidence-title">Log New Evidence</h2>
+        <span class="classification-tag info-tag">EVIDENCE SUBMISSION</span>
+    </header>
+
+    <form asp-action="Create" method="post" class="evidence-form">
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+        <div class="evidence-layout-grid">
+
+            <!-- Main Content Area -->
+            <div class="evidence-main">
+                <div class="form-group">
+                    <label asp-for="Type" class="form-label"></label>
+                    <input asp-for="Type" class="form-control" placeholder="e.g. Ballistics, DNA, Document" />
+                    <span asp-validation-for="Type" class="validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Description" class="validation-error"></span>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label asp-for="LocationFound" class="form-label"></label>
+                        <input asp-for="LocationFound" class="form-control" />
+                        <span asp-validation-for="LocationFound" class="validation-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DateCollected" class="form-label"></label>
+                        <input asp-for="DateCollected" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="DateCollected" class="validation-error"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar / Photo Area -->
+            <aside class="evidence-sidebar">
+                <div class="photo-record-box">
+                    <label asp-for="ImageUrl" class="meta-label">Photographic Record (URL)</label>
+                    <input asp-for="ImageUrl" class="form-control-sm image-input" placeholder="/images/fingerprint.jpg" />
+                    <span asp-validation-for="ImageUrl" class="validation-error"></span>
+
+                    <div class="preview-wrapper">
+                        <span class="preview-label">Preview</span>
+                        <div class="image-preview-placeholder">
+                            <span class="placeholder-text">NO IMAGE LOADED</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+
+        <footer class="form-actions">
+            <a asp-action="Index" class="btn-secondary">Cancel</a>
+            <button type="submit" class="btn-primary btn-info">Add Evidence</button>
+        </footer>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
