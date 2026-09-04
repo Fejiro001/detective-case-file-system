@@ -1,57 +1,53 @@
-﻿@model IEnumerable<DetectiveCaseFileSystem.Models.Suspect>
+﻿@model IEnumerable<Suspect>
 
 @{
     ViewData["Title"] = "All Suspects";
 }
 
-<section class="container mt-4">
-    <div class="mb-4 d-flex justify-content-between align-items-center">
-        <h2>Suspect Lineup</h2>
-        <a href="/Suspects/Create" class="btn btn-dark">Register Suspect</a>
-    </div>
+<section class="suspect-index-container">
+    <header class="index-header">
+        <div class="header-titles">
+            <span class="classification-tag danger-tag">SUSPECT LINEUP // PROFILE ARCHIVE</span>
+            <h2 class="index-title">Persons of Interest</h2>
+        </div>
+        <a asp-action="Create" class="btn-primary btn-danger">Register Suspect</a>
+    </header>
 
-    <div class="row">
+    <div class="suspect-grid">
         @foreach (Suspect suspect in Model)
         {
-            <article class="col-md-3 col-sm-6 mb-4 d-flex">
-                <div class="card w-100 shadow-sm border-dark">
+            <article class="suspect-card">
+                <figure class="suspect-card-media">
+                    <img src="@suspect.PhotoUrl"
+                         class="suspect-card-image"
+                         alt="Mugshot of @suspect.Name" />
+                    <figcaption class="risk-badge">
+                        Risk: @Html.DisplayFor(m => suspect.RiskLevel)
+                    </figcaption>
+                </figure>
 
-                    <figure class="m-0 position-relative">
-                        <img src="@suspect.PhotoUrl"
-                             class="card-img-top border-bottom bg-light"
-                             alt="Mugshot of @suspect.Name"
-                             style="height: 250px; object-fit: cover;" />
+                <div class="card-content">
+                    <h3 class="card-title">@suspect.Name</h3>
+                    <p class="card-desc">AKA: @suspect.Aliases</p>
 
-                        <!-- Risk Level Badge positioned over the photo -->
-                        <figcaption class="position-absolute top-0 start-0 m-2">
-                            <span class="badge shadow">Risk: @suspect.RiskLevel</span>
-                        </figcaption>
-                    </figure>
-
-                    <div class="card-body flex-grow-1 text-center">
-                        <header>
-                            <h3 class="h5 fw-bold mb-0">@suspect.Name</h3>
-                            <p class="text-muted small mb-2">
-                                AKA: @suspect.Aliases
-                            </p>
-                        </header>
-
-                        <ul class="list-unstyled small mb-0 text-start border-top pt-2 mt-2">
-                            <li class="text-truncate">
-                                <strong>Last Seen:</strong> @suspect.LastKnownLocation
-                            </li>
-                            <li>
-                                <strong>Role:</strong> @suspect.RoleInCase
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="card-footer bg-dark border-top-0 p-0">
-                        <a href="/Suspects/Details/@suspect.Id" class="btn btn-dark w-100 rounded-0">
-                            View File
-                        </a>
-                    </div>
+                    <dl class="suspect-meta">
+                        <div class="meta-row">
+                            <dt class="meta-label">Last Seen:</dt>
+                            <dd class="meta-value">@suspect.LastKnownLocation</dd>
+                        </div>
+                        <div class="meta-row">
+                            <dt class="meta-label">Role:</dt>
+                            <dd class="meta-value">@suspect.RoleInCase</dd>
+                        </div>
+                    </dl>
                 </div>
+
+                <footer class="card-actions">
+                    <a asp-action="Details" asp-route-id="@suspect.Id" class="btn-secondary">View File &rarr;</a>
+                    <form asp-action="Delete" asp-route-id="@suspect.Id" method="post" class="delete-form" onsubmit="return confirm('Remove suspect from database?');">
+                        <button type="submit" class="btn-danger" title="Delete Suspect Record">Delete</button>
+                    </form>
+                </footer>
             </article>
         }
     </div>

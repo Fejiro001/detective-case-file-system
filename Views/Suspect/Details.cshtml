@@ -1,5 +1,99 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model DetectiveCaseFileSystem.Models.SuspectViewModel
+
 @{
+    ViewData["Title"] = "Suspect Details";
+    // Display different bg-color depending on risk level
+    string riskModifier = Model.RiskLevel switch
+    {
+        RiskLevel.ArmedAndDangerous or
+        RiskLevel.Extreme => "risk-critical",
+        RiskLevel.FlightRisk or
+        RiskLevel.High => "risk-high",
+        RiskLevel.Medium => "risk-medium",
+        RiskLevel.Low => "risk-low",
+        _ => "risk-secondary"
+    };
 }
+
+<section class="suspect-details-container">
+    <header class="suspect-details-header">
+        <div class="header-titles">
+            <span class="classification-tag danger-tag">SUBJECT PROFILE // VERIFIED RECORD</span>
+            <h2 class="suspect-title">Suspect Profile: #@Model.Id</h2>
+        </div>
+        <div class="header-actions">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-secondary">Update Profile</a>
+            <a asp-action="Index" class="btn-primary btn-danger">Back to Lineup</a>
+        </div>
+    </header>
+
+    <article class="suspect-details-card">
+        <div class="suspect-details-grid">
+            <!-- Mugshot & Risk Banner -->
+            <aside class="suspect-mugshot-side">
+                <img src="@Model.PhotoUrl"
+                     class="suspect-mugshot-image"
+                     alt="Mugshot of @Model.Name" />
+                <div class="risk-banner @riskModifier font-mono">
+                    Risk Level: @Html.DisplayFor(m => Model.RiskLevel)
+                </div>
+            </aside>
+
+            <!-- Main Info & Metadata -->
+            <div class="suspect-content-wrapper">
+                <div class="suspect-main-info">
+                    <h1 class="suspect-name">@Model.Name</h1>
+                    <p class="suspect-aliases font-mono">AKA: "@(Model.Aliases ?? "NONE KNOWN")"</p>
+                </div>
+
+                <div class="suspect-data-grid">
+                    <div class="data-group">
+                        <h4 class="data-label">Primary Role</h4>
+                        <p class="data-value">@Html.DisplayFor(m => Model.RoleInCase)</p>
+                    </div>
+                    <div class="data-group">
+                        <h4 class="data-label">Last Known Location</h4>
+                        <p class="data-value font-mono">@(Model.LastKnownLocation ?? "UNTRACEABLE")</p>
+                    </div>
+                    <div class="data-group">
+                        <h4 class="data-label">Date of Birth</h4>
+                        <p class="data-value font-mono">@(Model.DateOfBirth?.ToString("yyyy-MM-dd") ?? "UNKNOWN")</p>
+                    </div>
+                    <div class="data-group">
+                        <h4 class="data-label">Linked Case File</h4>
+                        <p class="data-value font-mono">
+                            @if (Model.CaseId.HasValue && Model.CaseId != 0)
+                            {
+                                <a asp-controller="Case" asp-action="Details" asp-route-id="@Model.CaseId" class="text-warning">
+                                    [@Model.CaseNumber] @Model.CaseTitle
+                                </a>
+                            } else
+                            {
+                                <span class="text-muted">N/A</span>
+                            }
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Expanded Bio Details -->
+                <div class="suspect-extended-info">
+                    <div class="data-group mb-3">
+                        <h4 class="data-label">Physical Description</h4>
+                        <p class="data-value">@(Model.PhysicalDescription ?? "No description logged.")</p>
+                    </div>
+                    <div class="data-group">
+                        <h4 class="data-label">Known Associates</h4>
+                        <p class="data-value">@(Model.KnownAssociates ?? "None recorded.")</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="classification-notice font-mono">
+            <div class="notice-icon">&#9888;</div>
+            <div>
+                <strong>NOTICE:</strong> Subject is considered part of an active investigation. Any engagement must be logged with assigned personnel immediately.
+            </div>
+        </div>
+    </article>
+</section>

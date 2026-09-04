@@ -1,5 +1,89 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Suspect
+
 @{
+    ViewData["Title"] = "Update Suspect";
+}
+
+<section class="suspect-edit-container">
+    <header class="suspect-edit-header">
+        <div class="header-titles">
+            <span class="classification-tag danger-tag">SUBJECT PROFILE // UPDATE</span>
+            <h2 class="suspect-edit-title">Update Suspect / POI</h2>
+        </div>
+        <span class="suspect-file-badge font-mono">ID: @Model.Id</span>
+    </header>
+
+    <form asp-action="Edit" method="post" class="suspect-form">
+        <!-- Hidden ID is strictly required for Edit forms -->
+        <input type="hidden" asp-for="Id" />
+
+        <div class="suspect-layout-grid">
+            <!-- Main Form Fields -->
+            <div class="suspect-main">
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label asp-for="Name" class="form-label">Name</label>
+                        <input asp-for="Name" class="form-control" placeholder="Last, First M." />
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Aliases" class="form-label">Aliases</label>
+                        <input asp-for="Aliases" class="form-control" placeholder="Street names, monikers" />
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label asp-for="DateOfBirth" class="form-label">Date of Birth</label>
+                        <input asp-for="DateOfBirth" class="form-control" type="date" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CaseId" class="form-label">Associated Case File</label>
+                        <select asp-for="CaseId" class="form-select" asp-items="ViewBag.Cases">
+                            <option value="">-- Select Active Case File --</option>
+                        </select>
+                        <span asp-validation-for="CaseId"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="LastKnownLocation" class="form-label">Last Known Location</label>
+                    <input asp-for="LastKnownLocation" class="form-control" placeholder="Coordinates, address, sector" />
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label asp-for="RiskLevel" class="form-label">Risk Level</label>
+                        <select asp-for="RiskLevel" class="form-select" asp-items="Html.GetEnumSelectList<RiskLevel>()"></select>
+                        <span asp-validation-for="RiskLevel"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RoleInCase" class="form-label">Role in Case</label>
+                        <select asp-for="RoleInCase" class="form-select" asp-items="Html.GetEnumSelectList<RoleInCase>()"></select>
+                        <span asp-validation-for="RoleInCase"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="KnownAssociates" class="form-label">Known Associates</label>
+                    <input asp-for="KnownAssociates" class="form-control" placeholder="Names or connections" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PhysicalDescription" class="form-label">Physical Description</label>
+                    <textarea asp-for="PhysicalDescription" class="form-control" rows="3" placeholder="Distinguishing marks, height, build"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a asp-action="Index" class="btn-secondary">Cancel</a>
+            <button type="submit" class="btn-primary btn-danger">Update Profile</button>
+        </div>
+    </form>
+</section>
+
+@* Enables client-side validation to catch errors in the browser before hitting the server *@
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

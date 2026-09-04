@@ -1,0 +1,120 @@
+.suspect-edit-container {
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.suspect-edit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.header-titles {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.classification-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.5rem;
+    border-radius: 2px;
+    margin-bottom: 0.5rem;
+}
+
+.danger-tag {
+    color: var(--accent-danger);
+    background-color: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.suspect-edit-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.suspect-file-badge {
+    background-color: var(--accent-danger);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border-radius: 2px;
+}
+
+.suspect-form {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-top: 5px solid var(--accent-danger);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    padding: 2rem;
+}
+
+.suspect-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.suspect-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.validation-message,
+.field-validation-error {
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    font-family: var(--font-mono);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #2a2a2a;
+}
+
+@media (max-width: 768px) {
+    .suspect-layout-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+}

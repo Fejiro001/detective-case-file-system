@@ -1,0 +1,222 @@
+.suspect-details-container {
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.suspect-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.header-titles {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.classification-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.5rem;
+    border-radius: 2px;
+    margin-bottom: 0.5rem;
+}
+
+.danger-tag {
+    color: var(--accent-danger);
+    background-color: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.suspect-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin: 0;
+    color: var(--text-primary);
+    letter-spacing: 0.03em;
+}
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.suspect-details-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--accent-danger);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+}
+
+.suspect-details-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    align-items: start;
+}
+
+.suspect-mugshot-side {
+    background-color: var(--bg-dark);
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+}
+
+.suspect-mugshot-image {
+    width: 100%;
+    height: auto;
+    max-height: 320px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    display: block;
+}
+
+.risk-banner {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+}
+
+.risk-critical {
+    background-color: var(--accent-danger);
+    color: #fff;
+}
+
+.risk-high {
+    background-color: #f80;
+    color: #000;
+}
+
+.risk-medium {
+    background-color: var(--accent-warning);
+    color: #000;
+}
+
+.risk-low {
+    background-color: #198754;
+    color: #fff;
+}
+
+.risk-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.suspect-content-wrapper {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--bg-card);
+}
+
+.suspect-main-info {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1.25rem;
+}
+
+.suspect-name {
+    font-size: 2.25rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+    letter-spacing: 0.03em;
+}
+
+.suspect-aliases {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin: 0;
+    letter-spacing: 0.05em;
+}
+
+.suspect-data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.data-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.data-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.25rem;
+}
+
+.data-value {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.classification-notice {
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-light);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin-top: 20px;
+}
+
+.notice-icon {
+    font-size: 1.5rem;
+    color: var(--accent-danger);
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .suspect-details-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .header-actions {
+        flex-direction: column;
+    }
+
+    .suspect-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .suspect-mugshot-side {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .suspect-data-grid {
+        grid-template-columns: 1fr;
+    }
+}
