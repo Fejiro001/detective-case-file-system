@@ -4,30 +4,195 @@
     --bg-card: #1e1e1e;
     --text-primary: #f8f9fa;
     --text-muted: #a0a0a0;
-    --accent-warning: #ffc107;
-    --accent-danger: #dc3545;
+    --border-color: #333;
+    --border-light: #444;
+    --accent-warning: #ffc107; /* Cases */
+    --accent-info: #0dcaf0; /* Evidence */
+    --accent-danger: #dc3545; /* Destructive Actions */
+
     --font-mono: 'Courier New', Courier, monospace;
 }
 
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+}
+
+body.archive-body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.font-mono {
+    font-family: var(--font-mono);
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+.btn-primary, .btn-secondary, .btn-danger, .btn-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Base button variations */
+.btn-primary {
+    background-color: var(--accent-warning);
+    color: #000;
+    border-color: var(--accent-warning);
+}
+
+.btn-primary:hover {
+    background-color: var(--bg-dark);
+    color: #e0a800;
+    border-color: #d39e00;
+}
+
+.btn-info {
+    background-color: var(--accent-info);
+    color: #000;
+    border-color: var(--accent-info);
+}
+
+.btn-info:hover {
+    background-color: var(--bg-dark);
+    color: #0baccc;
+    border-color: #099ab8;
+}
+
+.btn-danger {
+    background-color: var(--accent-danger);
+    color: #fff;
+    border-color: var(--accent-danger);
+}
+
+.btn-danger:hover {
+    background-color: var(--bg-dark);
+    color: #c82333;
+    border-color: #bd2130;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--text-primary);
+    border-color: #555;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: #888;
+}
+
+.btn-subtle {
+    background-color: transparent;
+    color: var(--text-muted);
+    border: 1px dashed var(--border-light);
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+}
+
+.btn-subtle:hover {
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Overriding Bootstrap's default blue focus ring with your theme colors */
+.btn-primary:focus, .btn-secondary:focus, .btn-danger:focus, .btn-info:focus,
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-check-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--bg-dark), 0 0 0 4px var(--accent-warning);
+}
+
+/* =========================================
+   FORMS & VALIDATION
+   ========================================= */
+.form-control, .form-select, .form-control-sm, .form-select-sm {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    border: 1px solid var(--border-light);
+    padding: 0.65rem 0.75rem;
+    border-radius: 2px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control-sm, .form-select-sm {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.9rem;
+}
+
+.form-control:focus, .form-select:focus, .form-control-sm:focus, .form-select-sm:focus {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    outline: none;
+    border-color: var(--accent-warning);
+    box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.2);
+}
+
+.form-label {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #e2e8f0;
+}
+
+/* Validation Styling */
+.field-validation-error, .validation-error {
+    background-color: var(--bg-dark);
+    color: var(--accent-danger);
+    font-size: 0.85rem;
+    margin-top: 0.35rem;
+    font-family: var(--font-mono);
+}
+
+input.input-validation-error,
+select.input-validation-error,
+textarea.input-validation-error {
+    border-color: var(--accent-danger);
 }
