@@ -1,89 +1,96 @@
-﻿@model DetectiveCaseFileSystem.Models.Case
+﻿@model Case
 
 @{
     ViewData["Title"] = "Edit Case";
 }
 
-<section class="case-edit-container">
-    <header class="case-edit-header">
-        <h2 class="case-edit-title">Modify Case File</h2>
-        <span class="case-file-badge">@Model.CaseNumber</span>
+<section class="case-form-container">
+    <header class="form-header">
+        <span class="classification-tag">CLASSIFIED // CASE MODIFICATION</span>
+        <h2 class="form-title">Modify Case File: @Model.CaseNumber</h2>
     </header>
 
     <form asp-action="Edit" method="post" class="case-form">
-        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
-
-        <!-- Hidden ID is strictly required for Edit forms -->
         <input type="hidden" asp-for="Id" />
 
-        <div class="form-grid-2">
-            <div class="form-group">
-                <label asp-for="CaseNumber" class="form-label font-mono"></label>
-                <input asp-for="CaseNumber" class="form-control font-mono" />
-                <span asp-validation-for="CaseNumber" class="validation-error"></span>
+        <!-- Section 1: Identification -->
+        <fieldset class="form-section">
+            <legend class="section-title">Case Identification</legend>
+            <div class="form-grid dual-column">
+                <div class="form-group">
+                    <label asp-for="CaseNumber" class="form-label"></label>
+                    <input asp-for="CaseNumber" class="form-control font-mono" />
+                    <span asp-validation-for="CaseNumber"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title"></span>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Title" class="form-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="validation-error"></span>
+            <div class="form-group full-width">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
             </div>
-        </div>
+        </fieldset>
 
-        <div class="form-group full-width">
-            <label asp-for="Description" class="form-label"></label>
-            <textarea asp-for="Description" class="form-control" rows="5"></textarea>
-            <span asp-validation-for="Description" class="validation-error"></span>
-        </div>
-
-        <fieldset class="case-meta-fieldset">
-            <legend class="sr-only">Operational Meta</legend>
-            <div class="form-grid-3">
+        <!-- Section 2: Incident Parameters -->
+        <fieldset class="form-section">
+            <legend class="section-title">Incident Parameters</legend>
+            <div class="form-grid dual-column">
                 <div class="form-group">
-                    <label asp-for="Location" class="meta-label"></label>
-                    <input asp-for="Location" class="form-control-sm" />
-                    <span asp-validation-for="Location" class="validation-error"></span>
+                    <label asp-for="Location" class="form-label"></label>
+                    <input asp-for="Location" class="form-control" />
+                    <span asp-validation-for="Location"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="TimeOfCrime" class="meta-label"></label>
-                    <input asp-for="TimeOfCrime" type="datetime-local" class="form-control-sm" />
-                    <span asp-validation-for="TimeOfCrime" class="validation-error"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Investigator" class="meta-label"></label>
-                    <input asp-for="Investigator" class="form-control-sm" />
-                    <span asp-validation-for="Investigator" class="validation-error"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="CrimeType" class="meta-label"></label>
-                    <select asp-for="CrimeType" class="form-select-sm" asp-items="Html.GetEnumSelectList<DetectiveCaseFileSystem.Models.CrimeType>()"></select>
-                    <span asp-validation-for="CrimeType" class="validation-error"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="PriorityLevel" class="meta-label"></label>
-                    <select asp-for="PriorityLevel" class="form-select-sm" asp-items="Html.GetEnumSelectList<DetectiveCaseFileSystem.Models.PriorityLevel>()"></select>
-                    <span asp-validation-for="PriorityLevel" class="validation-error"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Status" class="meta-label"></label>
-                    <select asp-for="Status" class="form-select-sm" asp-items="Html.GetEnumSelectList<DetectiveCaseFileSystem.Models.Status>()"></select>
-                    <span asp-validation-for="Status" class="validation-error"></span>
+                    <label asp-for="TimeOfCrime" class="form-label"></label>
+                    <input asp-for="TimeOfCrime" type="datetime-local" class="form-control font-mono" />
                 </div>
             </div>
         </fieldset>
 
-        <footer class="form-actions">
-            <a asp-action="Index" class="btn-secondary">Abort</a>
+        <!-- Section 3: System Classification & Assignment -->
+        <fieldset class="form-section system-meta-group">
+            <legend class="section-title">System Classification & Assignment</legend>
+            <div class="form-grid dual-column">
+                <div class="form-group">
+                    <label asp-for="Investigator" class="form-label"></label>
+                    <input asp-for="Investigator" class="form-control" />
+                    <span asp-validation-for="Investigator"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CrimeType" class="form-label"></label>
+                    <select asp-for="CrimeType" class="form-select" asp-items="Html.GetEnumSelectList<CrimeType>()"></select>
+                    <span asp-validation-for="CrimeType"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PriorityLevel" class="form-label"></label>
+                    <select asp-for="PriorityLevel" class="form-select" asp-items="Html.GetEnumSelectList<PriorityLevel>()"></select>
+                    <span asp-validation-for="PriorityLevel"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Status" class="form-label"></label>
+                    <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<Status>()"></select>
+                    <span asp-validation-for="Status"></span>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="form-actions">
+            <a asp-action="Index" class="btn-secondary">&larr; Abort Modification</a>
             <button type="submit" class="btn-primary">Commit Updates</button>
-        </footer>
+        </div>
     </form>
 </section>
 
+@* Enables client-side validation to catch errors in the browser before hitting the server *@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

@@ -1,4 +1,4 @@
-﻿@model DetectiveCaseFileSystem.Models.Case
+﻿@model CaseViewModel
 
 @{
     ViewData["Title"] = "View Case Details";
@@ -10,12 +10,13 @@
         <header class="case-header">
             <div class="case-title-block">
                 <span class="classification-tag">CLASSIFIED // CASE FILE</span>
-                <h2 class="case-title">@Model.Title</h2>
-                <p class="case-file-number">FILE NO: @Model.CaseNumber</p>
+                <h2 class="case-title">@Model.Case.Title
+                </h2>
+                <p class="case-file-number">FILE NO: @Model.Case.CaseNumber</p>
             </div>
             <div class="case-status-block">
-                <span class="badge status-badge">@Model.Status</span>
-                <span class="badge priority-badge">@Model.PriorityLevel Priority</span>
+                <span class="badge status-badge">@Html.DisplayFor(m => Model.Case.Status)</span>
+                <span class="badge priority-badge">@Html.DisplayFor(m => Model.Case.PriorityLevel) Priority</span>
             </div>
         </header>
 
@@ -24,7 +25,49 @@
             <section class="case-main">
                 <h3 class="section-heading">Incident Report</h3>
                 <div class="report-content">
-                    <p class="description-text">@Model.Description</p>
+                    <p class="description-text">@Model.Case.Description</p>
+                </div>
+
+                <!-- Linked Suspects Section -->
+                <div class="case-sub-section mt-4">
+                    <h3 class="section-heading">Associated Suspects / POIs</h3>
+                    @if (@Model.Suspects.Any())
+                    {
+                        <ul class="meta-list">
+                            @foreach (Suspect suspect in Model.Suspects)
+                            {
+                                <li class="meta-item">
+                                    <span><strong>@suspect.Name</strong> (@Html.DisplayFor(m => suspect.RoleInCase))</span>
+                                    <a asp-controller="Suspect" asp-action="Details" asp-route-id="@suspect.Id" class="btn-secondary btn-sm text-nowrap">View File &rarr;</a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted font-mono">No suspects currently linked to this file.</p>
+                    }
+                </div>
+
+                <!-- Recovered Evidence Section -->
+                <div class="case-sub-section mt-4">
+                    <h3 class="section-heading">Recovered Evidence Ledger</h3>
+                    @if (@Model.Evidences.Any())
+                    {
+                        <ul class="meta-list">
+                            @foreach (var evidence in Model.Evidences)
+                            {
+                                <li class="meta-item">
+                                    <span><strong>[@evidence.Type]</strong> - @evidence.LocationFound</span>
+                                    <a asp-controller="Evidence" asp-action="Details" asp-route-id="@evidence.Id" class="btn-secondary btn-sm text-nowrap">Inspect &rarr;</a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted font-mono">No evidence logged for this file.</p>
+                    }
                 </div>
             </section>
 
@@ -33,23 +76,23 @@
                 <dl class="meta-list">
                     <div class="meta-item">
                         <dt class="meta-label">Assigned Investigator</dt>
-                        <dd class="meta-value">@Model.Investigator</dd>
+                        <dd class="meta-value">@Model.Case.Investigator</dd>
                     </div>
 
                     <div class="meta-item">
                         <dt class="meta-label">Crime Classification</dt>
-                        <dd class="meta-value">@Model.CrimeType</dd>
+                        <dd class="meta-value">@Html.DisplayFor(m => Model.Case.CrimeType)</dd>
                     </div>
 
                     <div class="meta-item">
                         <dt class="meta-label">Incident Location</dt>
-                        <dd class="meta-value">@Model.Location</dd>
+                        <dd class="meta-value">@Model.Case.Location</dd>
                     </div>
 
                     <div class="meta-item">
                         <dt class="meta-label">Timestamp</dt>
                         <dd class="meta-value font-mono">
-                            @(Model.TimeOfCrime?.ToString("yyyy-MM-dd HH:mm") ?? "UNKNOWN")
+                            @(Model.Case.TimeOfCrime?.ToString("yyyy-MM-dd HH:mm") ?? "UNKNOWN")
                         </dd>
                     </div>
                 </dl>
@@ -58,7 +101,7 @@
 
         <!-- Case Actions -->
         <footer class="case-footer">
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-primary">Edit Case</a>
+            <a asp-action="Edit" asp-route-id="@Model.Case.Id" class="btn-primary">Edit Case</a>
             <a asp-action="Index" class="btn-secondary">Back to Archives</a>
         </footer>
     </article>

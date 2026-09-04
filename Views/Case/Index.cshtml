@@ -1,17 +1,17 @@
-﻿@model IEnumerable<DetectiveCaseFileSystem.Models.Case>
+﻿@model IEnumerable<Case>
 
 @{
     ViewData["Title"] = "All Cases";
 }
 
 <section class="case-index-container">
-    <header class="index-header">
+    <div class="index-header">
         <div class="header-titles">
             <span class="classification-tag">CLASSIFIED // ARCHIVE</span>
             <h2 class="index-title">Active Investigations</h2>
         </div>
         <a asp-action="Create" class="btn-primary">Open New Case</a>
-    </header>
+    </div>
 
     <div class="case-grid">
         @foreach (Case caseItem in Model)
@@ -27,17 +27,17 @@
                     <p class="card-desc">@caseItem.Description</p>
 
                     <div class="badge-group">
-                        <span class="badge priority-badge">Priority: @caseItem.PriorityLevel</span>
-                        <span class="badge status-badge">Status: @caseItem.Status</span>
+                        <span class="badge priority-badge">Priority: @Html.DisplayFor(m => caseItem.PriorityLevel)</span>
+                        <span class="badge status-badge">Status: @Html.DisplayFor(m => caseItem.Status)</span>
                     </div>
                 </div>
 
-                <footer class="card-actions">
+                <div class="card-actions">
                     <a asp-action="Details" asp-route-id="@caseItem.Id" class="btn-secondary">Access File &rarr;</a>
                     <form asp-action="Delete" asp-route-id="@caseItem.Id" method="post" class="delete-form" onsubmit="return confirm('Permanently remove this case file?');">
                         <button type="submit" class="btn-danger" title="Delete Case File">Delete</button>
                     </form>
-                </footer>
+                </div>
             </article>
         }
     </div>
