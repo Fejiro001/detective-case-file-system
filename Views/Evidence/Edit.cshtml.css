@@ -1,4 +1,4 @@
-.evidence-create-container {
+.evidence-edit-container {
     margin: 2rem auto;
     padding: 0 1rem;
 }
@@ -35,7 +35,7 @@
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-top: 5px solid var(--accent-info);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     padding: 2rem;
 }
 
@@ -63,59 +63,9 @@
     flex-direction: column;
 }
 
-.evidence-sidebar {
-    background-color: rgba(0, 0, 0, 0.2);
-    border: 1px solid #2a2a2a;
-    padding: 1.5rem;
-    border-radius: 2px;
-}
-
-.photo-record-box {
-    display: flex;
-    flex-direction: column;
-}
-
-.image-input {
-    margin-bottom: 1.25rem;
-}
-
-.preview-wrapper {
-    text-align: center;
-}
-
-.preview-label {
-    display: block;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.5rem;
-}
-
-.image-preview-placeholder {
-    height: 140px;
-    width: 100%;
-    background-color: var(--bg-dark);
-    border: 1px dashed #555;
-    border-radius: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.placeholder-text {
-    font-size: 0.75rem;
-    color: #555;
-    letter-spacing: 0.05em;
-}
-
-.meta-label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
 }
 
 .form-actions {
@@ -127,10 +77,6 @@
 }
 
 @media (max-width: 768px) {
-    .evidence-layout-grid {
-        grid-template-columns: 1fr;
-    }
-
     .form-grid-2 {
         grid-template-columns: 1fr;
     }

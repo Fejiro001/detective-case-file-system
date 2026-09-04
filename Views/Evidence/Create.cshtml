@@ -6,59 +6,60 @@
 
 <section class="evidence-create-container">
     <header class="evidence-header">
+        <span class="classification-tag">EVIDENCE FILE // INTAKE</span>
         <h2 class="evidence-title">Log New Evidence</h2>
-        <span class="classification-tag info-tag">EVIDENCE SUBMISSION</span>
     </header>
 
     <form asp-action="Create" method="post" class="evidence-form">
-        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
-
         <div class="evidence-layout-grid">
-
             <!-- Main Content Area -->
             <div class="evidence-main">
-                <div class="form-group">
-                    <label asp-for="Type" class="form-label"></label>
-                    <input asp-for="Type" class="form-control" placeholder="e.g. Ballistics, DNA, Document" />
-                    <span asp-validation-for="Type" class="validation-error"></span>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label asp-for="Type" class="form-label"></label>
+                        <input asp-for="Type" class="form-control" placeholder="e.g. Ballistics, DNA, Document" />
+                        <span asp-validation-for="Type"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LocationFound" class="form-label"></label>
+                        <input asp-for="LocationFound" class="form-control" placeholder="Coordinates, address, sector" />
+                        <span asp-validation-for="LocationFound"></span>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label asp-for="CaseId" class="form-label"></label>
+                        <select asp-for="CaseId" class="form-select" asp-items="ViewBag.Cases" id="CaseDropdown">
+                            <option value="">-- Select Active Case File --</option>
+                        </select>
+                        <span asp-validation-for="CaseId"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SuspectId" class="form-label"></label>
+                        <select asp-for="SuspectId" class="form-select" id="SuspectDropdown">
+                            <option value="">-- None/Unassigned --</option>
+                            @foreach (Suspect suspect in ViewBag.Suspects)
+                                    {
+                                        <option value="@suspect.Id" data-case-id="@suspect.CaseId">@suspect.Name</option>
+                                    }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label asp-for="DateCollected" class="form-label"></label>
+                        <input asp-for="DateCollected" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="DateCollected"></span>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="Description" class="form-label"></label>
                     <textarea asp-for="Description" class="form-control" rows="4"></textarea>
-                    <span asp-validation-for="Description" class="validation-error"></span>
-                </div>
-
-                <div class="form-grid-2">
-                    <div class="form-group">
-                        <label asp-for="LocationFound" class="form-label"></label>
-                        <input asp-for="LocationFound" class="form-control" />
-                        <span asp-validation-for="LocationFound" class="validation-error"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="DateCollected" class="form-label"></label>
-                        <input asp-for="DateCollected" type="datetime-local" class="form-control" />
-                        <span asp-validation-for="DateCollected" class="validation-error"></span>
-                    </div>
                 </div>
             </div>
-
-            <!-- Sidebar / Photo Area -->
-            <aside class="evidence-sidebar">
-                <div class="photo-record-box">
-                    <label asp-for="ImageUrl" class="meta-label">Photographic Record (URL)</label>
-                    <input asp-for="ImageUrl" class="form-control-sm image-input" placeholder="/images/fingerprint.jpg" />
-                    <span asp-validation-for="ImageUrl" class="validation-error"></span>
-
-                    <div class="preview-wrapper">
-                        <span class="preview-label">Preview</span>
-                        <div class="image-preview-placeholder">
-                            <span class="placeholder-text">NO IMAGE LOADED</span>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-
         </div>
 
         <footer class="form-actions">
@@ -70,4 +71,46 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    @* This script handles displaying only the relevant suspects for the case selected by the user *@
+    <script>
+        let caseDropdown = document.getElementById("CaseDropdown");
+        let suspectDropdown = document.getElementById('SuspectDropdown');
+
+        let filterSuspects = () => {
+            let selectedCaseId = caseDropdown.value;
+            let options = suspectDropdown.options;
+
+            for(let i = 0; i < options.length; i++){
+                let option = options[i];
+
+                // Keeps the default value display
+                if(option.value === ""){
+                    option.style.display = "block";
+                    continue;
+                }
+
+                if(!selectedCaseId) {
+                    option.style.display = "none";
+                    continue;
+                }
+
+                let suspectCaseId = option.getAttribute('data-case-id');
+
+                if(suspectCaseId === selectedCaseId) {
+                    option.style.display = "block";
+                } else {
+                    option.style.display = "none";
+                }
+            }
+        }
+
+        // Run immediately when the page loads to hide suspects if no case is selected
+        document.addEventListener("DOMContentLoaded", filterSuspects);
+
+        // Run whenever the case selection changes
+        caseDropdown.addEventListener('change', function() {
+            suspectDropdown.value = "";
+            filterSuspects();
+        });
+    </script>
 }

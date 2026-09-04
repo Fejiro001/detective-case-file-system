@@ -1,5 +1,76 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model EvidenceViewModel
+
 @{
+    ViewData["Title"] = "View Evidence Details";
 }
+
+<section class="evidence-details-container">
+    <header class="evidence-details-header">
+        <div class="header-titles">
+            <span class="classification-tag info-tag">CHAIN OF CUSTODY VERIFIED</span>
+            <h2 class="evidence-title">Evidence Tag #@Model.Id</h2>
+        </div>
+        <div class="header-actions">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-primary btn-info">Modify Record</a>
+            <a asp-action="Index" class="btn-secondary">Back to Locker</a>
+        </div>
+    </header>
+
+    <article class="evidence-card">
+        <div class="evidence-grid">
+            <!-- Media / Image Section -->
+            <div class="evidence-media">
+                <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "https://placehold.co/400x300?text=No+Image" : Model.ImageUrl)" class="evidence-image" alt="Evidence Photo" />
+            </div>
+
+            <!-- Content & Meta Section -->
+            <div class="evidence-content-wrapper">
+                <div class="evidence-main-info">
+                    <span class="evidence-type-badge font-mono">@Model.Type</span>
+                    <p class="evidence-description">"@Model.Description"</p>
+                </div>
+
+                <ul class="meta-list">
+                    <li class="meta-item">
+                        <span class="meta-label">Recovery Location</span>
+                        <span class="meta-value">@Model.LocationFound</span>
+                    </li>
+                    <li class="meta-item">
+                        <span class="meta-label">Timestamp</span>
+                        <span class="meta-value font-mono">@Model.DateCollected.ToString("yyyy-MM-dd HH:mm:ss")</span>
+                    </li>
+                    <li class="meta-item">
+                        <span class="meta-label">Case File</span>
+                        <span class="meta-value font-mono">
+                            @if (Model.CaseId.HasValue && Model.CaseId != 0)
+                            {
+                                <a asp-controller="Case" asp-action="Details" asp-route-id="@Model.CaseId" class="text-warning">
+                                    [@Model.CaseNumber]
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-muted">N/A</span>
+                            }
+                        </span>
+                    </li>
+                    <li class="meta-item">
+                        <span class="meta-label">Linked Suspect</span>
+                        <span class="meta-value font-mono">
+                            @if (Model.SuspectId.HasValue && Model.SuspectId != 0)
+                            {
+                                <a asp-controller="Suspect" asp-action="Details" asp-route-id="@Model.SuspectId" class="text-warning">
+                                    @Model.SuspectName
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-muted">Unassigned</span>
+                            }
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </article>
+</section>

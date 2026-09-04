@@ -1,50 +1,53 @@
-﻿@model IEnumerable<DetectiveCaseFileSystem.Models.Evidence>
+﻿@model IEnumerable<Evidence>
 
 @{
     ViewData["Title"] = "All Evidence";
 }
 
-<section>
-    <div class="mb-4 d-flex justify-content-between align-items-center">
-        <h2>Evidence Locker</h2>
-        <a href="/Evidence/Create" class="btn btn-dark">Log New Evidence</a>
-    </div>
+<section class="evidence-index-container">
+    <header class="index-header">
+        <div class="header-titles">
+            <span class="classification-tag info-tag">FORENSIC VAULT // EVIDENCE ARCHIVE</span>
+            <h2 class="index-title">Evidence Locker</h2>
+        </div>
+        <a asp-action="Create" class="btn-primary btn-info">Log New Evidence</a>
+    </header>
 
-    <div class="row">
+    <div class="evidence-grid">
         @foreach (Evidence evidence in Model)
         {
-            <article class="col-md-3 col-sm-6 mb-4 d-flex">
-                <div class="card w-100 shadow-sm border-secondary">
-                    <figure>
-                        <img src="@(string.IsNullOrEmpty(evidence.ImageUrl) ? "https://placehold.co/400x300?text=No+Image" : evidence.ImageUrl)"
-                             class="card-img-top border-bottom"
-                             alt="Photograph of @evidence.Type"
-                             style="height: 200px; object-fit: cover;"/>
-                        <figcaption class="position-absolute top-0 end-0 bg-dark text-white p-1 m-2 rounded small">
-                            Tag: #@evidence.Id
-                        </figcaption>
-                    </figure>
+            <article class="evidence-card">
+                <figure class="evidence-card-media">
+                    <img src="@(evidence.ImageUrl)"
+                         class="evidence-card-image"
+                         alt="Photograph of @evidence.Type" />
+                    <figcaption class="tag-badge font-mono">
+                        Tag: #@evidence.Id
+                    </figcaption>
+                </figure>
 
-                    <div class="card-body flex-grow-1">
-                        <div>
-                            <h3 class="h5 text-uppercase fw-bold mb-1">@evidence.Type</h3>
+                <div class="card-content">
+                    <h3 class="card-title">@evidence.Type</h3>
+                    <p class="card-desc">@evidence.Description</p>
+
+                    <dl class="evidence-meta">
+                        <div class="meta-row">
+                            <dt class="meta-label">Recovered:</dt>
+                            <dd class="meta-value font-mono">@evidence.DateCollected.ToString("MM dd, yyyy")</dd>
                         </div>
-                        <p class="card-text text-muted small text-truncate">
-                            @evidence.Description
-                        </p>
-                        <dl class="mb-0 small mt-3 border-start border-warning border-3 ps-2">
-                            <dt class="text-secondary fw-normal mb-0">Recovered:</dt>
-                            <dd class="mb-1">@evidence.DateCollected.ToString("MM dd, yyyy")</dd>
-
-                            <dt class="text-secondary fw-normal mb-0">Location:</dt>
-                            <dd class="mb-0 text-truncate">@evidence.LocationFound</dd>
-                        </dl>
-                    </div>
-
-                    <div class="card bg-light border-top-0">
-                        <a href="/Evidence/Details/@evidence.Id" class="btn btn-outline-secondary btn-sm w-100">Forensic Details &rarr;</a>
-                    </div>
+                        <div class="meta-row">
+                            <dt class="meta-label">Location:</dt>
+                            <dd class="meta-value">@evidence.LocationFound</dd>
+                        </div>
+                    </dl>
                 </div>
+
+                <footer class="card-actions">
+                    <a asp-action="Details" asp-route-id="@evidence.Id" class="btn-secondary">Details &rarr;</a>
+                    <form asp-action="Delete" asp-route-id="@evidence.Id" method="post" class="delete-form" onsubmit="return confirm('Destroy evidence record?');">
+                        <button type="submit" class="btn-danger" title="Delete Evidence Record">Delete</button>
+                    </form>
+                </footer>
             </article>
         }
     </div>

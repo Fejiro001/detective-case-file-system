@@ -1,5 +1,112 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Evidence
+
 @{
+    ViewData["Title"] = "Update Evidence";
+}
+
+<section class="evidence-edit-container">
+    <header class="evidence-header">
+        <span class="classification-tag">CHAIN OF CUSTODY // UPDATE</span>
+        <h2 class="evidence-title">Update Evidence Tag #@Model.Id</h2>
+    </header>
+
+    <form asp-action="Edit" method="post" class="evidence-form">
+        <!-- Hidden ID is required for Edit forms -->
+        <input type="hidden" asp-for="Id" />
+
+        <div class="evidence-layout-grid">
+            <!-- Main Content Area -->
+            <div class="evidence-main">
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label asp-for="Type" class="form-label"></label>
+                        <input asp-for="Type" class="form-control" placeholder="e.g. Ballistics, DNA, Document" />
+                        <span asp-validation-for="Type"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LocationFound" class="form-label"></label>
+                        <input asp-for="LocationFound" class="form-control" placeholder="Coordinates, address, sector" />
+                        <span asp-validation-for="LocationFound"></span>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label asp-for="CaseId" class="form-label"></label>
+                        <select asp-for="CaseId" class="form-select" asp-items="ViewBag.Cases" id="CaseDropdown">
+                            <option value="">-- Select Active Case File --</option>
+                        </select>
+                        <span asp-validation-for="CaseId"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SuspectId" class="form-label">Associated Suspect (Optional)</label>
+                        <select asp-for="SuspectId" class="form-select" id="SuspectDropdown">
+                            <option value="">-- None / Unassigned --</option>
+                            @foreach (Suspect suspect in ViewBag.Suspects)
+                            {
+                                <option value="@suspect.Id" data-case-id="@suspect.CaseId">@suspect.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label asp-for="DateCollected" class="form-label"></label>
+                        <input asp-for="DateCollected" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="DateCollected"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <footer class="form-actions">
+            <a asp-action="Index" class="btn-secondary">Cancel</a>
+            <button type="submit" class="btn-primary btn-info">Update Evidence</button>
+        </footer>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    @* This script handles displaying only the relevant suspects for the case selected by the user, same as the Create script. *@
+    <script>
+        let caseDropdown = document.getElementById("CaseDropdown");
+        let filterSuspects = () => {
+            let suspectDropdown = document.getElementById("SuspectDropdown");
+            let options = suspectDropdown.options;
+
+            for (let i = 0; i < options.length; i++) {
+                let option = options[i];
+
+                // Keeps the default value display
+                if (option.value === "") {
+                    option.style.display = "block";
+                    continue;
+                }
+
+                let suspectCaseId = option.getAttribute("data-case-id");
+
+                if (suspectCaseId === caseDropdown.value) {
+                    option.style.display = "block";
+                } else {
+                    option.style.display = "none";
+                }
+            }
+        };
+
+        // Run filter immediately page is loaded
+        document.addEventListener("DOMContentLoaded", filterSuspects);
+
+        // When case is changed, clear the suspect dropdown and run the filter function
+        caseDropdown.addEventListener("change", () => {
+            document.getElementById("SuspectDropdown").value = "";
+            filterSuspects();
+        });
+    </script>
 }
