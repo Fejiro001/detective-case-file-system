@@ -1,5 +1,6 @@
 ﻿using DetectiveCaseFileSystem.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DetectiveCaseFileSystem.Controllers
 {
@@ -15,6 +16,7 @@ namespace DetectiveCaseFileSystem.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Cases = new SelectList(CaseController.Cases, "Id", "Title");
             return View();
         }
         [HttpPost]
@@ -26,6 +28,7 @@ namespace DetectiveCaseFileSystem.Controllers
                 Suspects.Add(suspect);
                 return RedirectToAction("Index");
             }
+            ViewBag.Cases = new SelectList(CaseController.Cases, "Id", "Title", suspect.CaseId);
             return View(suspect);
         }
 
@@ -34,6 +37,9 @@ namespace DetectiveCaseFileSystem.Controllers
         {
             var suspect = Suspects.FirstOrDefault(s => s.Id == id);
             if (suspect == null) return NotFound();
+
+            ViewBag.Cases = new SelectList(CaseController.Cases, "Id", "Title", suspect.CaseId);
+
             return View(suspect);
         }
         [HttpPost]
@@ -41,6 +47,8 @@ namespace DetectiveCaseFileSystem.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Cases = new SelectList(CaseController.Cases, "Id", "Title", updatedSuspect.CaseId);
+
                 return View(updatedSuspect);
             }
             var suspect = Suspects.FirstOrDefault(s => s.Id == updatedSuspect.Id);
@@ -90,11 +98,11 @@ namespace DetectiveCaseFileSystem.Controllers
                 RoleInCase = suspect.RoleInCase,
                 PhotoUrl = suspect.PhotoUrl,
                 PhysicalDescription = suspect.PhysicalDescription,
-                CaseId = foundCase.Id,
-                CaseNumber = foundCase.CaseNumber,
-                CaseTitle = foundCase.Title
+                CaseId = foundCase?.Id ?? 0,
+                CaseNumber = foundCase?.CaseNumber ?? "N/A",
+                CaseTitle = foundCase?.Title ?? "Unknown Case"
             };
-            return View(suspect);
+            return View(vm);
         }
     }
 }

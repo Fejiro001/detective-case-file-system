@@ -63,7 +63,15 @@ namespace DetectiveCaseFileSystem.Controllers
         {
             var foundCase = Cases.FirstOrDefault(c => c.Id == id);
             if (foundCase == null) return NotFound();
-            return View(foundCase);
+
+            var vm = new CaseViewModel
+            {
+                Case = foundCase,
+                Suspects = SuspectController.Suspects.Where(s => s.CaseId == id),
+                Evidences = EvidenceController.Evidences.Where(e => e.CaseId == id)
+            };
+
+            return View(vm);
         }
 
         [HttpPost]

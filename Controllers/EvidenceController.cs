@@ -1,39 +1,53 @@
 ﻿using DetectiveCaseFileSystem.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DetectiveCaseFileSystem.Controllers
 {
     public class EvidenceController : Controller
     {
-        private static List<Evidence> _evidences = new List<Evidence>();
+        public static List<Evidence> Evidences = new List<Evidence>();
         private static int _nextId = 1;
         public IActionResult Index()
         {
-            return View(_evidences);
+            return View(Evidences);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Cases = new SelectList(CaseController.Cases, "Id", "Title");
+            ViewBag.Suspects = SuspectController.Suspects.ToList();
+
             return View();
         }
         [HttpPost]
         public IActionResult Create(Evidence evidence)
         {
+            evidence.ImageUrl = "https://placehold.co/400x300/18181b/71717a?text=SECURE+FILE:+NO+VISUAL";
+
             if (ModelState.IsValid)
             {
                 evidence.Id = _nextId++;
-                _evidences.Add(evidence);
+                Evidences.Add(evidence);
                 return RedirectToAction("Index");
             }
+
+            ViewBag.Cases = new SelectList(CaseController.Cases, "Id", "Title", evidence.CaseId);
+            ViewBag.Suspects = SuspectController.Suspects.ToList();
+
             return View(evidence);
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var evidence = _evidences.FirstOrDefault(e => e.Id == id);
+            var evidence = Evidences.FirstOrDefault(e => e.Id == id);
             if (evidence == null) return NotFound();
+
+            ViewBag.Cases = new SelectList(CaseController.Cases, "Id", "Title", evidence.CaseId);
+            ViewBag.Suspects = SuspectController.Suspects.ToList();
+
             return View(evidence);
         }
         [HttpPost]
@@ -41,9 +55,12 @@ namespace DetectiveCaseFileSystem.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Cases = new SelectList(CaseController.Cases, "Id", "Title", updatedEvidence.CaseId);
+                ViewBag.Suspects = SuspectController.Suspects.ToList();
+
                 return View(updatedEvidence);
             }
-            var evidence = _evidences.FirstOrDefault(e => e.Id == updatedEvidence.Id);
+            var evidence = Evidences.FirstOrDefault(e => e.Id == updatedEvidence.Id);
             if (evidence == null) return NotFound();
 
             evidence.Type = updatedEvidence.Type;
@@ -53,6 +70,7 @@ namespace DetectiveCaseFileSystem.Controllers
             evidence.ImageUrl = updatedEvidence.ImageUrl;
             evidence.CaseId = updatedEvidence.CaseId;
             evidence.SuspectId = updatedEvidence.SuspectId;
+
             return RedirectToAction("Index");
         }
 
@@ -60,10 +78,10 @@ namespace DetectiveCaseFileSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            var evidence = _evidences.FirstOrDefault(e => e.Id == id);
+            var evidence = Evidences.FirstOrDefault(e => e.Id == id);
             if (evidence != null)
             {
-                _evidences.Remove(evidence);
+                Evidences.Remove(evidence);
             }
             return RedirectToAction("Index");
         }
@@ -72,10 +90,16 @@ namespace DetectiveCaseFileSystem.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            Evidence evidence = _evidences.FirstOrDefault(e => e.Id == id);
+            Evidence evidence = Evidences.FirstOrDefault(e => e.Id == id);
             if (evidence == null) return NotFound();
+
             Case foundCase = CaseController.Cases.FirstOrDefault(c => c.Id == evidence.CaseId);
-            Suspect suspect = SuspectController.Suspects.FirstOrDefault(c => c.Id == evidence.SuspectId);
+
+            // Only search for a suspect if a SuspectId actually exists
+            Suspect suspect = evidence.SuspectId.HasValue
+                ? SuspectController.Suspects.FirstOrDefault(s => s.Id == evidence.SuspectId)
+                : null;
+
             var vm = new EvidenceViewModel
             {
                 Id = evidence.Id,
@@ -84,12 +108,12 @@ namespace DetectiveCaseFileSystem.Controllers
                 DateCollected = evidence.DateCollected,
                 LocationFound = evidence.LocationFound,
                 ImageUrl = evidence.ImageUrl,
-                CaseId = foundCase.Id,
-                CaseNumber = foundCase.CaseNumber,
-                SuspectId = suspect.Id,
-                SuspectName = suspect.Name
+                CaseId = foundCase?.Id ?? 0,
+                CaseNumber = foundCase?.CaseNumber ?? "N/A",
+                SuspectId = suspect?.Id ?? 0,
+                SuspectName = suspect?.Name ?? "Unassigned"
             };
-            return View(evidence);
+            return View(vm);
         }
     }
 }
