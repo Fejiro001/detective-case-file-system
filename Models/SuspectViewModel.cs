@@ -15,8 +15,8 @@
         public string? PhysicalDescription { get; set; }
         
         // Only essential Case info to display and for linking
-        public int CaseId { get; set; }
-        public string CaseNumber { get; set; }
-        public string CaseTitle { get; set; }
+        public int? CaseId { get; set; }
+        public string? CaseNumber { get; set; }
+        public string? CaseTitle { get; set; }
     }
 }

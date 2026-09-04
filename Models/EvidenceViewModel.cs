@@ -11,10 +11,10 @@
         public string? ImageUrl { get; set; }
 
         // Just important Case info to display
-        public int CaseId { get; set; }
-        public string CaseNumber { get; set; }
+        public int? CaseId { get; set; }
+        public string? CaseNumber { get; set; }
 
-        // Optional Suspect info attached
+        // Optional Suspect info for the Details view
         public int? SuspectId { get; set; }
         public string? SuspectName { get; set; }
     }

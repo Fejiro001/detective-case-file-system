@@ -29,7 +29,7 @@ namespace DetectiveCaseFileSystem.Models
         [Required(ErrorMessage = "Case status is required.")]
         public Status Status { get; set; }
 
-        [Display(Name = "Time Of Crime")]
+        [Display(Name = "Time Crime Occurred")]
         public DateTime? TimeOfCrime { get; set; }
 
         [Required(ErrorMessage = "Name of investigator is required.")]
