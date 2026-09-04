@@ -8,67 +8,70 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DetectiveCaseFileSystem.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="archive-body">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Detective Case File System</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom border-secondary box-shadow mb-3">
+            <div class="container-md justify-content-between">
+                <a class="navbar-brand font-monospace text-uppercase fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span class="text-warning">■</span>
+                    Case File System
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <!-- Cases Dropdown -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="caseDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="caseDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Cases
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="caseDropdown">
+                            <ul class="dropdown-menu dropdown-menu-dark border-secondary rounded-0 shadow-lg" aria-labelledby="caseDropdown">
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Case" asp-action="Index">View All</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Case" asp-action="Create">Add New</a></li>
                             </ul>
                         </li>
-                        <!-- Evidence Dropdown -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="evidenceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Evidence
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="evidenceDropdown">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Evidence" asp-action="Index">View All</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Evidence" asp-action="Create">Add New</a></li>
-                            </ul>
-                        </li>
                         <!-- Suspects Dropdown -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="suspectDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="suspectDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Suspects
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="suspectDropdown">
+                            <ul class="dropdown-menu dropdown-menu-dark border-secondary rounded-0 shadow-lg" aria-labelledby="suspectDropdown">
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Suspect" asp-action="Index">View All</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Suspect" asp-action="Create">Add New</a></li>
                             </ul>
                         </li>
+                        <!-- Evidence Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="evidenceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Evidence
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark border-secondary rounded-0 shadow-lg" aria-labelledby="evidenceDropdown">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Evidence" asp-action="Index">View All</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Evidence" asp-action="Create">Add New</a></li>
+                            </ul>
+                        </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-md mb-5">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - DetectiveCaseFileSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top border-secondary footer text-muted bg-dark mt-auto py-3">
+        <div class="container font-monospace small">
+            &copy; 2026 - DetectiveCaseFileSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-secondary">Privacy Policy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
