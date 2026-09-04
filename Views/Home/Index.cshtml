@@ -1,8 +1,90 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Command Center";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="command-center-container">
+    <!-- Hero Terminal Banner -->
+    <div class="terminal-hero">
+        <div class="terminal-hero-content">
+            <span class="classification-tag warning-tag font-mono">CLASSIFIED // YOUR EYES ONLY</span>
+            <h1 class="terminal-title">Detective Case File System</h1>
+            <p class="terminal-desc">
+                Welcome to the Case File System. Easily manage active investigations, organize recovered evidence, and track suspect profiles in one central dashboard.
+            </p>
+            <div class="hero-actions">
+                <a asp-controller="Case" asp-action="Create" class="btn-primary">Open New Case</a>
+                <a asp-controller="Case" asp-action="Index" class="btn-secondary">Access Case Archives</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Modules -->
+    <div class="modules-grid">
+        <!-- Module 1: Cases -->
+        <article class="module-card card-cases">
+            <header class="module-header font-mono">
+                Case Files
+            </header>
+            <div class="module-body">
+                <div>
+                    <h3 class="module-title">Active Investigations</h3>
+                    <p class="module-text">
+                        Browse and manage all ongoing investigations, update case statuses, and review incident details.
+                    </p>
+                </div>
+                <div class="module-actions">
+                    <a asp-controller="Case" asp-action="Index" class="btn-secondary">View All Cases</a>
+                    <a asp-controller="Case" asp-action="Create" class="btn-subtle">Log New Incident</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Module 2: Evidence Vault -->
+        <article class="module-card card-evidence">
+            <header class="module-header font-mono">
+                Forensic Vault
+            </header>
+            <div class="module-body">
+                <div>
+                    <h3 class="module-title">Evidence Locker</h3>
+                    <p class="module-text">
+                        Log, organize, and track all physical and digital evidence items linked to your cases.
+                    </p>
+                </div>
+                <div class="module-actions">
+                    <a asp-controller="Evidence" asp-action="Index" class="btn-secondary">Open Locker</a>
+                    <a asp-controller="Evidence" asp-action="Create" class="btn-subtle">Tag Evidence Item</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Module 3: Suspect Database -->
+        <article class="module-card card-suspects">
+            <header class="module-header font-mono">
+                Suspect Database
+            </header>
+            <div class="module-body">
+                <div>
+                    <h3 class="module-title">POI Lineup</h3>
+                    <p class="module-text">
+                        View and manage suspect profiles, monitor risk levels, and keep track of their details.
+                    </p>
+                </div>
+                <div class="module-actions">
+                    <a asp-controller="Suspect" asp-action="Index" class="btn-secondary">View Lineup</a>
+                    <a asp-controller="Suspect" asp-action="Create" class="btn-subtle">Register Suspect</a>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <!-- Status Ticker -->
+    <footer class="system-ticker font-mono">
+        <div class="ticker-status">
+            <span class="status-online">● SYSTEM ONLINE</span> — ALL ARCHIVE NODES RESPONDING
+        </div>
+        <div class="ticker-session text-muted">
+            TERMINAL SESSION ID: #@DateTime.Now.Ticks.ToString().Substring(0, 8)
+        </div>
+    </footer>
+</section>

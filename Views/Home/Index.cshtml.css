@@ -1,0 +1,206 @@
+.command-center-container {
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Terminal Hero Banner */
+.terminal-hero {
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--accent-warning);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    padding: 3rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+.classification-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.5rem;
+    border-radius: 2px;
+    margin-bottom: 0.75rem;
+}
+
+.warning-tag {
+    color: var(--accent-warning);
+    background-color: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.terminal-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin: 0 0 1rem 0;
+    letter-spacing: 0.03em;
+}
+
+.terminal-desc {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    max-width: 900px;
+    margin: 0 0 2rem 0;
+    line-height: 1.5;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.terminal-hero .btn-primary {
+    background-color: var(--accent-warning);
+    color: #000;
+    border: 1px solid var(--accent-warning);
+    font-weight: 700;
+    padding: 0.625rem 1.5rem;
+}
+
+.terminal-hero .btn-primary:hover {
+    background-color: #e0a800;
+}
+
+/* Modules Grid Layout */
+.modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.module-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.module-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Specific left border accents for modules */
+.card-cases {
+    border-left: 5px solid var(--accent-warning);
+}
+
+.card-evidence {
+    border-left: 5px solid var(--accent-info);
+}
+
+.card-suspects {
+    border-left: 5px solid var(--accent-danger);
+}
+
+.module-header {
+    background-color: var(--bg-dark);
+    padding: 1rem 1.25rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-cases .module-header {
+    color: var(--accent-warning);
+}
+
+.card-evidence .module-header {
+    color: var(--accent-info);
+}
+
+.card-suspects .module-header {
+    color: var(--accent-danger);
+}
+
+.module-body {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.module-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+    text-transform: uppercase;
+}
+
+.module-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0 0 1.5rem 0;
+    line-height: 1.4;
+}
+
+.module-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.module-actions .btn-secondary {
+    text-align: center;
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+}
+
+/* Status Ticker Footer */
+.system-ticker {
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--text-muted);
+    padding: 1rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.ticker-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-online {
+    color: #198754;
+    font-weight: 700;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .terminal-hero {
+        padding: 2rem 1.5rem;
+    }
+
+    .terminal-title {
+        font-size: 1.85rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+    }
+
+    .system-ticker {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+
+    .ticker-session {
+        display: block !important;
+    }
+}
